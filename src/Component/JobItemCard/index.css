@@ -1,0 +1,27 @@
+.star-icon {
+  color: gold;
+}
+.job-item-logo {
+  width: 80px;
+}
+.job-item-div1 {
+  display: flex;
+  align-items: center;
+}
+.job-item-div2 {
+  line-height: 1px;
+  margin-left: 10px;
+}
+.job-item-div3 {
+  display: flex;
+  align-items: center;
+}
+.job-item-card {
+  background-color: lawngreen;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 9px;
+}
+.job-item-rating-text {
+  margin-left: 10px;
+}

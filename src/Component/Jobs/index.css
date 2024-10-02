@@ -1,0 +1,66 @@
+.jobs-home {
+  min-height: 100vh;
+  background-color: black;
+}
+.jobs-body {
+  width: 80%;
+  margin: auto;
+  padding-top: 30px;
+}
+.jobs-div1 {
+  background-color: seagreen;
+  width: 30%;
+  padding: 10px;
+  border-radius: 10px;
+}
+.jobs-div2 {
+  background-color: seagreen;
+  width: 65%;
+  border-radius: 10px;
+}
+.jobs-cards-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+.side1-card {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 9px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 5px;
+  padding: 10px;
+}
+.jobs-avatar {
+  width: 50px;
+}
+.job-search-container {
+  width: 40%;
+  background-color: chartreuse;
+  height: 40px;
+  display: flex;
+  border-radius: 6px;
+  border: 1px solid grey;
+}
+.job-search-input {
+  width: 100%;
+  background-color: black;
+  color: white;
+  outline: none;
+  padding-left: 10px;
+}
+.job-search-button {
+  background-color: grey;
+  border: 0px;
+  outline: none;
+  padding: 10px;
+  cursor: pointer;
+}
+.ul-joblist-container {
+  list-style: none;
+  padding-left: 0px;
+}
