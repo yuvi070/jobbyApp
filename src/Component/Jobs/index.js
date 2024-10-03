@@ -6,10 +6,30 @@ import Header from '../Header'
 
 import './index.css'
 
+const employmentTypesList = [
+  {
+    label: 'Full Time',
+    employmentTypeId: 'FULLTIME',
+  },
+  {
+    label: 'Part Time',
+    employmentTypeId: 'PARTTIME',
+  },
+  {
+    label: 'Freelance',
+    employmentTypeId: 'FREELANCE',
+  },
+  {
+    label: 'Internship',
+    employmentTypeId: 'INTERNSHIP',
+  },
+]
+
 class Jobs extends Component {
   state = {
     jobsList: [],
     profileData: [],
+    employeType: [],
   }
 
   componentDidMount() {
@@ -72,29 +92,80 @@ class Jobs extends Component {
     }
   }
 
+  onClickFullTime = () => {
+    const {employeType} = this.state
+    const value = 'FULLTIME'
+    const isThere = employeType.includes(value)
+    if (isThere === true) {
+      const filterArray = employeType.filter(each => each !== value)
+      this.setState(prev => ({employeType: [filterArray]}))
+    } else {
+      const updatedList = employeType.push(value)
+      console.log(updatedList)
+      this.setState(prev => ({employeType: [updatedList]}))
+    }
+  }
+
   employmentType = () => (
     <>
-      <input type="checkbox" id="fullTime" name="Full Time" value="Full Time" />
-      <label htmlFor="fullTime"> Full Time</label>
+      <button
+        type="button"
+        onClick={this.onClickFullTime}
+        className="checkbox-button"
+      >
+        <input
+          type="checkbox"
+          id="fullTime"
+          name="Full Time"
+          value="Full Time"
+        />
+        <label htmlFor="fullTime"> Full Time</label>
+      </button>
+
       <br />
-      <input type="checkbox" id="partTime" name="Full Time" value="Full Time" />
-      <label htmlFor="partTime"> Part Time</label>
+      <button
+        type="button"
+        onClick={this.onClickPartTime}
+        className="checkbox-button"
+      >
+        <input
+          type="checkbox"
+          id="partTime"
+          name="Full Time"
+          value="Full Time"
+        />
+        <label htmlFor="partTime"> Part Time</label>
+      </button>
+
       <br />
-      <input
-        type="checkbox"
-        id="freelance"
-        name="Full Time"
-        value="Full Time"
-      />
-      <label htmlFor="freelance"> Freelance</label>
+      <button
+        type="button"
+        onClick={this.onClickFreelance}
+        className="checkbox-button"
+      >
+        <input
+          type="checkbox"
+          id="freelance"
+          name="Full Time"
+          value="Full Time"
+        />
+        <label htmlFor="freelance"> Freelance</label>
+      </button>
+
       <br />
-      <input
-        type="checkbox"
-        id="internship"
-        name="Full Time"
-        value="Full Time"
-      />
-      <label htmlFor="internship"> Internship</label>
+      <button
+        type="button"
+        onClick={this.onClickInternship}
+        className="checkbox-button"
+      >
+        <input
+          type="checkbox"
+          id="internship"
+          name="Full Time"
+          value="Full Time"
+        />
+        <label htmlFor="internship"> Internship</label>
+      </button>
     </>
   )
 
@@ -158,6 +229,8 @@ class Jobs extends Component {
   }
 
   render() {
+    const {employeType} = this.state
+    console.log(employeType)
     return (
       <div className="jobs-home">
         <div className="jobs-body">

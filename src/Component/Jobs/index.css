@@ -9,6 +9,7 @@
 }
 .jobs-div1 {
   background-color: seagreen;
+  height: 80vh;
   width: 30%;
   padding: 10px;
   border-radius: 10px;
@@ -63,4 +64,9 @@
 .ul-joblist-container {
   list-style: none;
   padding-left: 0px;
+}
+.checkbox-button {
+  background-color: transparent;
+  border: 0px;
+  outline: none;
 }
