@@ -39,7 +39,6 @@ class Jobs extends Component {
 
   getProfile = async () => {
     const token = Cookies.get('jwt_token')
-    console.log(token)
     const apiUrl = 'https://apis.ccbp.in/profile'
     const options = {
       method: 'GET',
@@ -52,13 +51,11 @@ class Jobs extends Component {
     if (response.ok) {
       const data = await response.json()
       const data2 = data.profile_details
-      console.log(data)
       const updatedData = {
         name: data2.name,
         profileImageUrl: data2.profile_image_url,
         shortBio: data2.short_bio,
       }
-      console.log(updatedData)
       this.setState({profileData: updatedData})
     } else {
       console.log('Error')
@@ -98,11 +95,46 @@ class Jobs extends Component {
     const isThere = employeType.includes(value)
     if (isThere === true) {
       const filterArray = employeType.filter(each => each !== value)
-      this.setState(prev => ({employeType: [filterArray]}))
+      this.setState(() => ({employeType: [filterArray]}))
     } else {
-      const updatedList = employeType.push(value)
-      console.log(updatedList)
-      this.setState(prev => ({employeType: [updatedList]}))
+      this.setState(prev => ({employeType: [...prev.employeType, value]}))
+    }
+  }
+
+  onClickPartTime = () => {
+    const {employeType} = this.state
+    const value = 'PARTTIME'
+    const isThere = employeType.includes(value)
+    if (isThere === true) {
+      const filterArray = employeType.filter(each => each !== value)
+      this.setState(() => ({employeType: [filterArray]}))
+    } else {
+      this.setState(prev => ({employeType: [...prev.employeType, value]}))
+    }
+  }
+
+  onClickFreelance = () => {
+    const {employeType} = this.state
+    const value = 'FREELANCE'
+    const isThere = employeType.includes(value)
+    if (isThere === true) {
+      const filterArray = employeType.filter(each => each !== value)
+      this.setState(() => ({employeType: [filterArray]}))
+    } else {
+      this.setState(prev => ({employeType: [...prev.employeType, value]}))
+    }
+  }
+
+  onClickInternship = () => {
+    const {employeType} = this.state
+    const value = 'INTERNSHIP'
+    const isThere = employeType.includes(value)
+
+    if (isThere === true) {
+      const filterArray = employeType.filter(each => each !== value)
+      this.setState(() => ({employeType: [filterArray]}))
+    } else {
+      this.setState(prev => ({employeType: [...prev.employeType, value]}))
     }
   }
 
