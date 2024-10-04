@@ -2,6 +2,7 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {FaSearch} from 'react-icons/fa'
 import JobItemCard from '../JobItemCard'
+import EmploymentType from '../EmploymentType'
 import Header from '../Header'
 
 import './index.css'
@@ -89,50 +90,12 @@ class Jobs extends Component {
     }
   }
 
-  onClickFullTime = () => {
+  onClickFullTime = value => {
     const {employeType} = this.state
-    const value = 'FULLTIME'
     const isThere = employeType.includes(value)
     if (isThere === true) {
       const filterArray = employeType.filter(each => each !== value)
-      this.setState(() => ({employeType: [filterArray]}))
-    } else {
-      this.setState(prev => ({employeType: [...prev.employeType, value]}))
-    }
-  }
-
-  onClickPartTime = () => {
-    const {employeType} = this.state
-    const value = 'PARTTIME'
-    const isThere = employeType.includes(value)
-    if (isThere === true) {
-      const filterArray = employeType.filter(each => each !== value)
-      this.setState(() => ({employeType: [filterArray]}))
-    } else {
-      this.setState(prev => ({employeType: [...prev.employeType, value]}))
-    }
-  }
-
-  onClickFreelance = () => {
-    const {employeType} = this.state
-    const value = 'FREELANCE'
-    const isThere = employeType.includes(value)
-    if (isThere === true) {
-      const filterArray = employeType.filter(each => each !== value)
-      this.setState(() => ({employeType: [filterArray]}))
-    } else {
-      this.setState(prev => ({employeType: [...prev.employeType, value]}))
-    }
-  }
-
-  onClickInternship = () => {
-    const {employeType} = this.state
-    const value = 'INTERNSHIP'
-    const isThere = employeType.includes(value)
-
-    if (isThere === true) {
-      const filterArray = employeType.filter(each => each !== value)
-      this.setState(() => ({employeType: [filterArray]}))
+      this.setState(() => ({employeType: filterArray}))
     } else {
       this.setState(prev => ({employeType: [...prev.employeType, value]}))
     }
@@ -140,64 +103,13 @@ class Jobs extends Component {
 
   employmentType = () => (
     <>
-      <button
-        type="button"
-        onClick={this.onClickFullTime}
-        className="checkbox-button"
-      >
-        <input
-          type="checkbox"
-          id="fullTime"
-          name="Full Time"
-          value="Full Time"
+      {employmentTypesList.map(i => (
+        <EmploymentType
+          list={i}
+          onClickFullTime={this.onClickFullTime}
+          key={i.employmentTypeId}
         />
-        <label htmlFor="fullTime"> Full Time</label>
-      </button>
-
-      <br />
-      <button
-        type="button"
-        onClick={this.onClickPartTime}
-        className="checkbox-button"
-      >
-        <input
-          type="checkbox"
-          id="partTime"
-          name="Full Time"
-          value="Full Time"
-        />
-        <label htmlFor="partTime"> Part Time</label>
-      </button>
-
-      <br />
-      <button
-        type="button"
-        onClick={this.onClickFreelance}
-        className="checkbox-button"
-      >
-        <input
-          type="checkbox"
-          id="freelance"
-          name="Full Time"
-          value="Full Time"
-        />
-        <label htmlFor="freelance"> Freelance</label>
-      </button>
-
-      <br />
-      <button
-        type="button"
-        onClick={this.onClickInternship}
-        className="checkbox-button"
-      >
-        <input
-          type="checkbox"
-          id="internship"
-          name="Full Time"
-          value="Full Time"
-        />
-        <label htmlFor="internship"> Internship</label>
-      </button>
+      ))}
     </>
   )
 
