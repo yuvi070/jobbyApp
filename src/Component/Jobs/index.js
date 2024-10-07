@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import Loader from 'react-loader-spinner'
 import {FaSearch} from 'react-icons/fa'
 import JobItemCard from '../JobItemCard'
 import EmploymentType from '../EmploymentType'
@@ -25,12 +26,18 @@ const employmentTypesList = [
     employmentTypeId: 'INTERNSHIP',
   },
 ]
-
+const apiConstant = {
+  initial: 'INITIAL',
+  progress: 'PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
 class Jobs extends Component {
   state = {
     jobsList: [],
     profileData: [],
     employeType: [],
+    apiStatus1: apiConstant.initial,
   }
 
   componentDidMount() {
@@ -39,6 +46,7 @@ class Jobs extends Component {
   }
 
   getProfile = async () => {
+    this.setState({apiStatus1: apiConstant.progress})
     const token = Cookies.get('jwt_token')
     const apiUrl = 'https://apis.ccbp.in/profile'
     const options = {
@@ -57,9 +65,9 @@ class Jobs extends Component {
         profileImageUrl: data2.profile_image_url,
         shortBio: data2.short_bio,
       }
-      this.setState({profileData: updatedData})
+      this.setState({profileData: updatedData, apiStatus1: apiConstant.success})
     } else {
-      console.log('Error')
+      this.setState({apiStatus1: apiConstant.failure})
     }
   }
 
@@ -90,15 +98,37 @@ class Jobs extends Component {
     }
   }
 
+  loaderFunction = () => (
+    <div className="loader-container" data-testid="loader">
+      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+    </div>
+  )
+
   onClickFullTime = value => {
     const {employeType} = this.state
     const isThere = employeType.includes(value)
+    console.log(isThere)
     if (isThere === true) {
       const filterArray = employeType.filter(each => each !== value)
       this.setState(() => ({employeType: filterArray}))
     } else {
       this.setState(prev => ({employeType: [...prev.employeType, value]}))
     }
+  }
+
+  profileCardFunction = () => {
+    const {profileData} = this.state
+    return (
+      <div className="side1-card">
+        <img
+          src={profileData.profileImageUrl}
+          className="jobs-avatar"
+          alt="profile-avatar"
+        />
+        <h1>{profileData.name}</h1>
+        <p>{profileData.shortBio}</p>
+      </div>
+    )
   }
 
   employmentType = () => (
@@ -131,19 +161,25 @@ class Jobs extends Component {
     </>
   )
 
+  apiChecking = () => {
+    const {apiStatus1} = this.state
+    switch (apiStatus1) {
+      case 'PROGRESS':
+        return this.loaderFunction()
+      case 'SUCCESS':
+        return this.profileCardFunction()
+      case 'FAILURE':
+        return this.loaderFunction()
+      default:
+        return null
+    }
+  }
+
   leftDiv = () => {
     const {profileData} = this.state
     return (
       <div className="jobs-div1">
-        <div className="side1-card">
-          <img
-            src={profileData.profileImageUrl}
-            className="jobs-avatar"
-            alt="profile-avatar"
-          />
-          <h1>{profileData.name}</h1>
-          <p>{profileData.shortBio}</p>
-        </div>
+        {this.apiChecking()}
         <hr />
         <h2>Type of Employment</h2>
         <div>{this.employmentType()}</div>
@@ -174,7 +210,6 @@ class Jobs extends Component {
 
   render() {
     const {employeType} = this.state
-    console.log(employeType)
     return (
       <div className="jobs-home">
         <div className="jobs-body">
