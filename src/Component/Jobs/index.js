@@ -38,6 +38,8 @@ class Jobs extends Component {
     profileData: [],
     employeType: [],
     apiStatus1: apiConstant.initial,
+    apiStatus2: apiConstant.initial,
+    salaryRange: '',
   }
 
   componentDidMount() {
@@ -72,8 +74,10 @@ class Jobs extends Component {
   }
 
   getJobsList = async () => {
+    this.setState({apiStatus2: apiConstant.progress})
+    const {employeType, salaryRange} = this.state
     const token = Cookies.get('jwt_token')
-    const apiUrl = 'https://apis.ccbp.in/jobs'
+    const apiUrl = `https://apis.ccbp.in/jobs?employment_type=${employeType.join()}&minimum_package=${salaryRange}&search=`
     const options = {
       method: 'GET',
       headers: {
@@ -94,7 +98,9 @@ class Jobs extends Component {
         title: each.title,
       }))
 
-      this.setState({jobsList: updatedData})
+      this.setState({jobsList: updatedData, apiStatus2: apiConstant.success})
+    } else {
+      this.setState({apiStatus2: apiConstant.failure})
     }
   }
 
@@ -110,7 +116,7 @@ class Jobs extends Component {
     console.log(isThere)
     if (isThere === true) {
       const filterArray = employeType.filter(each => each !== value)
-      this.setState(() => ({employeType: filterArray}))
+      this.setState(() => ({employeType: filterArray}), this.getJobsList)
     } else {
       this.setState(prev => ({employeType: [...prev.employeType, value]}))
     }
@@ -143,20 +149,44 @@ class Jobs extends Component {
     </>
   )
 
+  onChangeSalaryRange = event => {
+    this.setState({salaryRange: event.target.value}, this.getJobsList)
+  }
+
   salaryRange = () => (
     <>
       <form onChange={this.onChangeSalaryRange}>
-        <input type="radio" id="contactChoice1" name="contact" value="10 lpa" />
+        <input
+          type="radio"
+          id="contactChoice1"
+          name="contact"
+          value="1000000"
+        />
         <label htmlFor="contactChoice1">10 LPA</label>
         <br />
-        <input type="radio" id="contactChoice2" name="contact" value="20 lpa" />
+        <input
+          type="radio"
+          id="contactChoice2"
+          name="contact"
+          value="2000000"
+        />
         <label htmlFor="contactChoice2">20 LPA</label>
         <br />
-        <input type="radio" id="contactChoice3" name="contact" value="30 lpa" />
+        <input
+          type="radio"
+          id="contactChoice3"
+          name="contact"
+          value="3000000"
+        />
         <label htmlFor="contactChoice3">30 LPA</label>
         <br />
-        <input type="radio" id="contactChoice3" name="contact" value="40 lpa" />
-        <label htmlFor="contactChoice3">40 LPA</label>
+        <input
+          type="radio"
+          id="contactChoice4"
+          name="contact"
+          value="4000000"
+        />
+        <label htmlFor="contactChoice4">40 LPA</label>
       </form>
     </>
   )
@@ -168,6 +198,20 @@ class Jobs extends Component {
         return this.loaderFunction()
       case 'SUCCESS':
         return this.profileCardFunction()
+      case 'FAILURE':
+        return this.loaderFunction()
+      default:
+        return null
+    }
+  }
+
+  apiChecking2 = () => {
+    const {apiStatus2} = this.state
+    switch (apiStatus2) {
+      case 'PROGRESS':
+        return this.loaderFunction()
+      case 'SUCCESS':
+        return this.jobsListCards()
       case 'FAILURE':
         return this.loaderFunction()
       default:
@@ -189,6 +233,17 @@ class Jobs extends Component {
     )
   }
 
+  jobsListCards = () => {
+    const {jobsList} = this.state
+    return (
+      <ul className="ul-joblist-container">
+        {jobsList.map(each => (
+          <JobItemCard key={each.id} each={each} />
+        ))}
+      </ul>
+    )
+  }
+
   rightDiv = () => {
     const {jobsList} = this.state
     return (
@@ -199,11 +254,7 @@ class Jobs extends Component {
             <FaSearch />
           </button>
         </div>
-        <ul className="ul-joblist-container">
-          {jobsList.map(each => (
-            <JobItemCard key={each.id} each={each} />
-          ))}
-        </ul>
+        {this.apiChecking2()}
       </div>
     )
   }
