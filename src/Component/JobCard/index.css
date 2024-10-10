@@ -1,0 +1,64 @@
+.jobCard-home {
+  background-color: black;
+  padding-bottom: 40px;
+  padding-top: 20px;
+}
+.jobCard-body {
+  width: 80%;
+  margin: auto;
+}
+.company-link-navigation-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.jobCard-main {
+  padding: 20px;
+  margin-top: 25px;
+  background-color: #202020;
+  color: white;
+}
+.company-link-navigation {
+  text-decoration: none;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.skills-container {
+  list-style: none;
+  padding-left: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+.skill-image {
+  width: 30%;
+  margin-right: 10px;
+}
+.skill-card-container {
+  display: flex;
+  align-items: center;
+  width: 30%;
+}
+.life-at-company-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.similar-jobs-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.similar-jobs-card {
+  width: 30%;
+  background-color: seagreen;
+  padding: 10px;
+  border-radius: 9px;
+}
+.similar-job-logo {
+  width: 80px;
+}
